@@ -4,21 +4,23 @@ def score(endpoints, solution_data_structure):
     partial_denum = 0
 
     for endpoint in endpoints:
-        for request in endpoint["requests"]:
+        for request in endpoints[endpoint]["requests"]:
             (video_id, nb_of_requests) = request
             possible_server = list()
-            possible_server.append(endpoint["latency_datacenter"])
-            for cache_id, cache in enumerate(solution_data_structure):
-                for video in cache:
+            possible_server.append(endpoints[endpoint]["latency_datacenter"])
+            for cache in endpoints[endpoint]["caches"]:
+                (id_cache, latency_of_cache_to_the_endpoint) = cache
+                for video in solution_data_structure[id_cache]:
                     if video == video_id:
-                        possible_server.append(endpoint["caches"][cache_id])
+                        possible_server.append(latency_of_cache_to_the_endpoint)
             minimum_latency = min(possible_server)
-            time_saved = endpoint["latency_datacenter"] - minimum_latency
+            time_saved = endpoints[endpoint]["latency_datacenter"] - minimum_latency
             partial_num += nb_of_requests * time_saved
             partial_denum += nb_of_requests
 
     score = partial_num / partial_denum
+    score *= 1000
 
-    return score
+    return int(score)
 
 
