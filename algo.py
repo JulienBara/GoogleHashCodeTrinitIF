@@ -28,7 +28,7 @@ def better_solution(filename, endpoints, videos, nb_caches, cache_size, all_requ
         solution.append(set())
 
     for id_endpoint, nb_req, id_video in all_requests:
-        nb = randint(0,len(endpoints) - 1)
+        nb = randint(0, len(endpoints) - 1)
 
         endpoint = endpoints[nb]
         for id_cache, latency in endpoint["caches"]:
@@ -56,11 +56,14 @@ def better_better_solution(filename):
     shall_we_go_on = True
     while shall_we_go_on:
         shall_we_go_on = False
-        endpoints_ordered.sort(key=lambda x: -x["requests"][0][1])
+        endpoints_ordered.sort(key=lambda x: -x["requests"][0][1] if x["requests"] else -1)
         for i, endpoint in enumerate(endpoints_ordered):
             if not endpoint["requests"]:
                 continue
-            id_video, _ = endpoint["requests"][0]
+            if len(endpoint["requests"]) == 1:
+                id_video, _ = endpoint["requests"][0]
+            else:
+                id_video, _ = endpoint["requests"][randint(0, 1)]
             for id_cache, _ in endpoint["caches"]:
                 if caches[id_cache] > videos[id_video]:
                     solution[id_cache].add(id_video)
@@ -72,27 +75,17 @@ def better_better_solution(filename):
     for i in range(len(solution)):
         solution[i] = list(solution[i])
 
-    return solution
+    return solution, endpoints
 
 
 if __name__ == "__main__":
     filenames = ["kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"]
-    for filename in filenames:
-        solution = better_better_solution(filename)
-        printer(solution, filename)
-    # max_score = 0
-    # solution = {}
-    # while(True):
-    #     sum_score = 0
-    #     for filename in filenames:
-    #         endpoints, videos, nb_caches, cache_size, all_requests = parser(filename)
-    #         solution[filename] = better_solution(filename, endpoints, videos, nb_caches, cache_size, all_requests)
-    #         this_score = score(endpoints, solution[filename])
-    #         print(this_score)
-    #         sum_score = sum_score + this_score
-    #
-    #     if(sum_score > max_score):
-    #         max_score = sum_score
-    #         print(max_score)
-    #         for file, result in solution.items():
-    #             printer(result, file)
+    maxscores = {f: -1 for f in filenames}
+    for i in range(20):
+        for filename in filenames:
+            solution, endpoints = better_better_solution(filename)
+            nowscore = score(endpoints, solution)
+            if nowscore > maxscores[filename]:
+                maxscores[filename] = nowscore
+                printer(solution, filename)
+
