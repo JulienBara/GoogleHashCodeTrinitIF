@@ -1,6 +1,6 @@
 from parser import parser
 from printer import printer
-
+from score import score
 
 
 def dumb_solution(filename):
@@ -18,8 +18,8 @@ def dumb_solution(filename):
     return solution
 
 
-def better_solution(filename):
-    endpoints, videos, nb_caches, cache_size, all_requests = parser(filename)
+def better_solution(filename, endpoints, videos, nb_caches, cache_size, all_requests):
+   
     solution = []
     caches = {i: cache_size for i in range(nb_caches)}
 
@@ -42,6 +42,19 @@ def better_solution(filename):
 
 if __name__ == "__main__":
     filenames = ["kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"]
-    for filename in filenames:
-        solution = better_solution(filename)
-        printer(solution, filename)
+    max_score = 0
+    solution = {}
+    while(True):
+        sum_score = 0
+        for filename in filenames:
+            endpoints, videos, nb_caches, cache_size, all_requests = parser(filename)
+            solution[filename] = better_solution(filename, endpoints, videos, nb_caches, cache_size, all_requests)
+            this_score = score(endpoints, solution)
+            print(this_score)
+            sum_score = sum_score + this_score
+            
+        if(sum_score > max_score):
+            max_score = sum_score
+            print(max_score)
+            printer(solution, filename)
+    print(max_score)
