@@ -40,7 +40,8 @@ def parser(filename):
 
     all_requests = []
     for id_endpoint, value in endpoints.items():
-        all_requests += [(id_endpoint, r) for r in value["requests"]]
+        all_requests += [(id_endpoint, r[1], r[0]) for r in value["requests"]]
+    print(all_requests)
     all_requests.sort(key=lambda x: -x[1])
 
     return endpoints, videos, number_of_caches, caches_capacity, all_requests
