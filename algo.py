@@ -40,8 +40,40 @@ def better_solution(filename):
     return solution
 
 
+def better_better_solution(filename):
+    endpoints, videos, nb_caches, cache_size, all_requests = parser(filename)
+    solution = []
+    caches = {i: cache_size for i in range(nb_caches)}
+
+    endpoints_ordered = list(endpoints.values())
+
+    for _ in range(nb_caches):
+        solution.append(set())
+
+    shall_we_go_on = True
+    while shall_we_go_on:
+        shall_we_go_on = False
+        endpoints_ordered.sort(key=lambda x: -x["requests"][0][1])
+        for i, endpoint in enumerate(endpoints_ordered):
+            if not endpoint["requests"]:
+                continue
+            id_video, _ = endpoint["requests"][0]
+            for id_cache, _ in endpoint["caches"]:
+                if caches[id_cache] > videos[id_video]:
+                    solution[id_cache].add(id_video)
+                    caches[id_cache] -= videos[id_video]
+                    endpoints_ordered[i]["requests"] = endpoints_ordered[i]["requests"][1:]
+                    shall_we_go_on = True
+                    break
+
+    for i in range(len(solution)):
+        solution[i] = list(solution[i])
+
+    return solution
+
+
 if __name__ == "__main__":
     filenames = ["kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"]
     for filename in filenames:
-        solution = better_solution(filename)
+        solution = better_better_solution(filename)
         printer(solution, filename)
