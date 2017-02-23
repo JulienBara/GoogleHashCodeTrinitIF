@@ -1,7 +1,7 @@
-def print(caches):
+def printer(caches):
 	f = open('out.txt', 'w')
-	len = len(caches)
-	f.write(str(len)+'\n')
+	length = len(caches)
+	f.write(str(length)+'\n')
 	for cache in caches:
 		for videos in cache:
 			s = str(videos)
@@ -11,4 +11,4 @@ def print(caches):
 
 
 if __name__ == "__main__":
-    print()
+    printer()
