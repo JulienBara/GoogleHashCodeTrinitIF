@@ -88,4 +88,3 @@ if __name__ == "__main__":
             if nowscore > maxscores[filename]:
                 maxscores[filename] = nowscore
                 printer(solution, filename)
-
