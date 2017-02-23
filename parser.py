@@ -9,7 +9,7 @@ def parser(filename):
         lines = f.readlines()
 
     V, E, R, number_of_caches, caches_capacity = [int(i) for i in lines[0].split()]
-    sizes = lines[1].split()
+    sizes = [int(i) for i in lines[1].split()]
     for i in range(V):
         videos[i] = sizes[i]
 
