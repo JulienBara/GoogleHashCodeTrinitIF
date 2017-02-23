@@ -1,4 +1,5 @@
 from parser import parser
+from printer import printer
 
 
 def algo():
@@ -25,4 +26,5 @@ def dumb_solution():
 
 if __name__ == "__main__":
     solution = dumb_solution()
-    print(solution)
+    printer(solution)
+
