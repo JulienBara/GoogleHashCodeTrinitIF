@@ -1,13 +1,14 @@
 from parser import parser
 from printer import printer
 
+filename = "me_at_the_zoo.in"
 
 def algo():
     a = parser()
     print(a)
 
 def dumb_solution():
-    endpoints, videos, nb_caches, cache_size = parser("trending_today.in")
+    endpoints, videos, nb_caches, cache_size = parser(filename)
 
     solution = []
 
@@ -26,5 +27,6 @@ def dumb_solution():
 
 if __name__ == "__main__":
     solution = dumb_solution()
-    printer(solution)
+    print(solution)
+    printer(solution, filename)
 

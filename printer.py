@@ -2,7 +2,7 @@ import uuid
 
 
 def printer(caches, input_filename):
-    f = open('out_' + input_filename + "_" + uuid.uuid4() + '.txt', 'w')
+    f = open('out_' + input_filename + "_" + str(uuid.uuid4()) + '.txt', 'w')
     length = len(caches)
     f.write(str(length) + '\n')
     for cache in caches:
