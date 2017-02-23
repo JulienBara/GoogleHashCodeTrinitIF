@@ -34,6 +34,11 @@ def parser(filename):
         video_id, endpoint_id, nb_of_requests = [int(a) for a in lines[i].split()]
         endpoints[endpoint_id]["requests"].append((video_id, nb_of_requests))
 
+    for i in range(E):
+        endpoints[i]["requests"].sort(key=lambda x: -x[1])
+
+    print(endpoints[2]["requests"])
+
     return endpoints, videos, number_of_caches, caches_capacity
 
 

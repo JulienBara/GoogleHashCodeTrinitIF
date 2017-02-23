@@ -1,0 +1,22 @@
+from parser import parser
+
+endpoints, videos, number_of_caches, caches_capacity = parser("kittens.in")
+
+endpoints = {
+    1: {
+        "latency_datacenter": {
+            "caches": [(id_cache(integer), latency of cache to the endpoint(integer))],
+            "latency_datacenter": latency of the endpoint to the datacenter(integer),
+            "requests":[
+                (id video(integer), number of requests of this video(integer))
+            ]
+        }
+    },
+    2: {...}
+}
+
+videos = {
+    1: size of the video (integer),
+    2: ..,
+    ..
+}
