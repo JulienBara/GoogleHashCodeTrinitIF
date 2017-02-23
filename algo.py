@@ -1,5 +1,6 @@
 from parser import parser
 from printer import printer
+from score import score
 
 
 
