@@ -6,6 +6,6 @@ def printer(caches, input_filename):
     length = len(caches)
     f.write(str(length) + '\n')
     for i, cache in enumerate(caches):
-        f.write(str(i) + " ".join(cache))
+        f.write(str(i) + " " + " ".join([str(a) for a in cache]))
         f.write('\n')
     f.close()

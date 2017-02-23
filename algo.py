@@ -1,7 +1,7 @@
 from parser import parser
 from printer import printer
 
-filename = "me_at_the_zoo.in"
+filename = "videos_worth_spreading.in"
 
 def algo():
     a = parser()
@@ -27,6 +27,6 @@ def dumb_solution():
 
 if __name__ == "__main__":
     solution = dumb_solution()
-    print(solution)
+    #print(solution)
     printer(solution, filename)
 
