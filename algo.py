@@ -19,7 +19,7 @@ def dumb_solution():
     return solution
 
 
-def
+
 
 if __name__ == "__main__":
     solution = dumb_solution()
