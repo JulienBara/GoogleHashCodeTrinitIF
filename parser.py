@@ -41,7 +41,7 @@ def parser(filename):
     all_requests = []
     for id_endpoint, value in endpoints.items():
         all_requests += [(id_endpoint, r[1], r[0]) for r in value["requests"]]
-    all_requests.sort(key=lambda x: -x[1])
+    all_requests.sort(key=lambda x: (-float(x[1]), videos[x[2]]))  # nb_req then size_of_video
 
     return endpoints, videos, number_of_caches, caches_capacity, all_requests
 
