@@ -1,6 +1,7 @@
 from parser import parser
 from printer import printer
 from score import score
+from random import randint
 
 
 def dumb_solution(filename):
@@ -27,7 +28,9 @@ def better_solution(filename, endpoints, videos, nb_caches, cache_size, all_requ
         solution.append(set())
 
     for id_endpoint, nb_req, id_video in all_requests:
-        endpoint = endpoints[id_endpoint]
+        nb = randint(0,len(endpoints) - 1)
+
+        endpoint = endpoints[nb]
         for id_cache, latency in endpoint["caches"]:
             if caches[id_cache] > videos[id_video]:
                 caches[id_cache] -= videos[id_video]
@@ -49,12 +52,12 @@ if __name__ == "__main__":
         for filename in filenames:
             endpoints, videos, nb_caches, cache_size, all_requests = parser(filename)
             solution[filename] = better_solution(filename, endpoints, videos, nb_caches, cache_size, all_requests)
-            this_score = score(endpoints, solution)
+            this_score = score(endpoints, solution[filename])
             print(this_score)
             sum_score = sum_score + this_score
             
         if(sum_score > max_score):
             max_score = sum_score
             print(max_score)
-            printer(solution, filename)
-    print(max_score)
+            for file, result in solution.items():
+                printer(result, file)
