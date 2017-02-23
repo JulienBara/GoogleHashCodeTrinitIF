@@ -1,6 +1,6 @@
 from parser import parser
 
-endpoints, videos, number_of_caches, caches_capacity = parser("kittens.in")
+endpoints, videos, number_of_caches, caches_capacity, all_requests = parser("kittens.in")
 
 endpoints = {
     1: {
@@ -20,3 +20,5 @@ videos = {
     2: ..,
     ..
 }
+
+all_requests = [(id video(integer), number of requests of this video(integer))]
