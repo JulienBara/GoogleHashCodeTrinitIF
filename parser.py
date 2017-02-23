@@ -36,8 +36,7 @@ def parser(filename):
 
     for i in range(E):
         endpoints[i]["requests"].sort(key=lambda x: -x[1])
-
-    print(endpoints[2]["requests"])
+        endpoints[i]["caches"].sort(key=lambda x: x[1])
 
     return endpoints, videos, number_of_caches, caches_capacity
 
