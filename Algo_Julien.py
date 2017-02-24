@@ -102,6 +102,7 @@ def parser(filename):
 # from printer import printer
 # from score import score
 from random import randint
+from random import shuffle
 
 
 def dumb_solution(filename):
@@ -176,17 +177,66 @@ def better_better_solution(filename):
 
     return solution, endpoints
 
-def rand_solution
+
+def rand_solution(filename):
+    endpoints, videos, nb_caches, cache_size, all_requests = parser(filename)
+    solution = []
+    caches = {i: cache_size for i in range(nb_caches)}
+
+    endpoints_shuffled = list(endpoints.values())
+
+    for _ in range(nb_caches):
+        solution.append(set())
+
+    shall_we_go_on = True
+    while shall_we_go_on:
+        shall_we_go_on = False
+        shuffle(endpoints_shuffled)
+
+        for i, endpoint in enumerate(endpoints_shuffled):
+            if not endpoint["requests"]:
+                continue
+            else:
+                id_video, _ = endpoint["requests"][randint(0, len(endpoint["requests"])-1)]
+            shuffle(endpoint["caches"])
+            for id_cache, _ in endpoint["caches"]:
+                if caches[id_cache] > videos[id_video]:
+                    solution[id_cache].add(id_video)
+                    caches[id_cache] -= videos[id_video]
+                    endpoints_shuffled[i]["requests"] = endpoints_shuffled[i]["requests"][1:]
+                    shall_we_go_on = True
+                    break
+
+    for i in range(len(solution)):
+        solution[i] = list(solution[i])
+
+    return solution, endpoints
+
+
 
 
 if __name__ == "__main__":
     filenames = ["kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"]
     maxscores = {f: -1 for f in filenames}
-    for i in range(20):
+    for i in range(1000):
+        print("i = " + str(i))
         for filename in filenames:
-            solution, endpoints = better_better_solution(filename)
+            solution, endpoints = rand_solution(filename)
             nowscore = score(endpoints, solution)
             if nowscore > maxscores[filename]:
+                print("new best score for " + filename + " is " + str(nowscore))
                 maxscores[filename] = nowscore
                 printer(solution, filename)
+
+    # maxscore = -1
+    # filename = "kittens.in"
+    # for i in range(20):
+    #     print("i = " + str(i))
+    #     solution, endpoints = rand_solution(filename)
+    #     nowscore = score(endpoints, solution)
+    #     if nowscore > maxscore:
+    #         print("new best score for " + filename + " is " + str(nowscore))
+    #         maxscore = nowscore
+    #         printer(solution, filename)
+
 
